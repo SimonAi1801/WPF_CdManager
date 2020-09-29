@@ -1,4 +1,5 @@
 ﻿using CdManager.Model;
+using CDManager.Wpf.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +27,55 @@ namespace CDManager.Wpf
         {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            btnNew.Click += BtnNew_Click;
+            btnDelete.Click += BtnDelete_Click;
+            btnEdit.Click += BtnEdit_Click;
+        }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Cd selectedCd = listBoxCds.SelectedItem as Cd;
+
+            if (selectedCd == null)
+            {
+                MessageBox.Show("Sie müssen eine CD auswählen!");
+                return;
+            }
+            //Repo erweitern
+            Repository repo = Repository.GetInstance();
+            _cds = repo.GetAllCds();
+            listBoxCds.ItemsSource = _cds;
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Cd selectedCd = listBoxCds.SelectedItem as Cd;
+
+            if (selectedCd == null)
+            {
+                MessageBox.Show("Sie müssen eine CD auswählen!");
+                return;
+            }
+            //Repo erweitern
+            Repository repo = Repository.GetInstance();
+            _cds = repo.GetAllCds();
+            listBoxCds.ItemsSource = _cds;
+        }
+
+        private void BtnNew_Click(object sender, RoutedEventArgs e)
+        {
+            AddCdWindow addCdWindow = new AddCdWindow();
+            addCdWindow.ShowDialog();
+
+            Repository repo = Repository.GetInstance();
+            _cds = repo.GetAllCds();
+            listBoxCds.ItemsSource = _cds;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Repository repo = Repository.GetInstance();
             _cds = repo.GetAllCds();
-
             listBoxCds.ItemsSource = _cds;
         }
     }

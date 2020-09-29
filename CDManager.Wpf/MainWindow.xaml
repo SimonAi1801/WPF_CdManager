@@ -5,29 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CDManager.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" x:Name="wndMain">
+        Title="MainWindow" Height="340" Width="511" x:Name="wndMain" MinWidth="392" MinHeight="180">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Margin="0,10,0,20" HorizontalAlignment="Center">CD Sammlung</TextBlock>
 
-        <ListBox x:Name="listBoxCds" Grid.Row="1">
+        <!--<ListBox x:Name="listBoxCds" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Width="{Binding ElementName=wndMain, Path=Width}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="70*"/>
-                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="30*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding Path=AlbumTitle}"/>
                         <TextBlock Grid.Column="1" Text="{Binding Path=Artist}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
+
+        <ListView Grid.Row="1" x:Name="listBoxCds">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Path=AlbumTitle}"/>
+                        <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Path=Artist}"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        <UniformGrid Grid.Row="2" Grid.Column="3">
+            <Button Margin="10,10,10,10" Content="Neu" x:Name="btnNew"/>
+            <Button Margin="10,10,10,10" Content="Löschen" x:Name="btnDelete"/>
+            <Button Margin="10,10,10,10" Content="Bearbeiten" x:Name="btnEdit"/>
+        </UniformGrid>
     </Grid>
 </Window>
