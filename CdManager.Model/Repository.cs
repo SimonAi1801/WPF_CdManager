@@ -61,6 +61,11 @@ namespace CdManager.Model
             cds.Add(cd);
         }
 
+        public void Remove(Cd selectedCd)
+        {
+            cds.Remove(selectedCd);
+        }
+
         /// <summary>
         /// Liefert eine (neue!) Liste aller Cds
         /// Entkoppelt die zurückgelieferte Collektion von der Collection im Repository

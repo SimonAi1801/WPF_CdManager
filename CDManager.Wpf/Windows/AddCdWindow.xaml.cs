@@ -18,10 +18,12 @@ namespace CDManager.Wpf.Windows
     /// </summary>
     public partial class AddCdWindow : Window
     {
-        public AddCdWindow()
+        private Cd _cd;
+        public AddCdWindow(Cd cd)
         {
             InitializeComponent();
             Loaded += AddCdWindow_Loaded;
+            _cd = cd;
         }
 
         private void BtnCancle_Click(object sender, RoutedEventArgs e)
@@ -31,7 +33,10 @@ namespace CDManager.Wpf.Windows
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            Repository.GetInstance().AddCd(DataContext as Cd);
+            if (_cd == null)
+            {
+                Repository.GetInstance().AddCd(DataContext as Cd);
+            }
             Close();
         }
 
@@ -40,11 +45,18 @@ namespace CDManager.Wpf.Windows
             btnSave.Click += BtnSave_Click;
             btnCancle.Click += BtnCancle_Click;
 
-            DataContext = new Cd 
+            if (_cd == null)
             {
-                AlbumTitle = "Bitte geben Sie hier den Titel ein!",
-                Artist = "Bitte geben Sie hier den Artist ein"
-            };
+                DataContext = new Cd
+                {
+                    AlbumTitle = "Bitte geben Sie hier den Titel ein!",
+                    Artist = "Bitte geben Sie hier den Artist ein"
+                };
+            }
+            else
+            {
+                DataContext = _cd;
+            }
         }
     }
 }

@@ -41,9 +41,11 @@ namespace CDManager.Wpf
                 MessageBox.Show("Sie müssen eine CD auswählen!");
                 return;
             }
-            //Repo erweitern
+            AddCdWindow addCdWindow = new AddCdWindow(selectedCd);
+            addCdWindow.ShowDialog();
             Repository repo = Repository.GetInstance();
             _cds = repo.GetAllCds();
+
             listBoxCds.ItemsSource = _cds;
         }
 
@@ -56,15 +58,15 @@ namespace CDManager.Wpf
                 MessageBox.Show("Sie müssen eine CD auswählen!");
                 return;
             }
-            //Repo erweitern
             Repository repo = Repository.GetInstance();
+            repo.Remove(selectedCd);
             _cds = repo.GetAllCds();
             listBoxCds.ItemsSource = _cds;
         }
 
         private void BtnNew_Click(object sender, RoutedEventArgs e)
         {
-            AddCdWindow addCdWindow = new AddCdWindow();
+            AddCdWindow addCdWindow = new AddCdWindow(null);
             addCdWindow.ShowDialog();
 
             Repository repo = Repository.GetInstance();
